@@ -1,8 +1,8 @@
 cmake_minimum_required (VERSION 3.2)
 project (systemd_dbus_service_demo)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -g -O0")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -g -O0 -std=c++11")
 
 
 # setup directory paths for short
@@ -46,7 +46,10 @@ link_directories(
     ${COMMONAPI_DIR}/dbus-1.8.20/dbus/.libs
 )
  
-target_link_libraries(src-gen CommonAPI CommonAPI-DBus dbus-1)
+target_link_libraries(src-gen
+                         PUBLIC
+                            CommonAPI CommonAPI-DBus dbus-1
+)
  
  
 # add Client target
@@ -62,3 +65,18 @@ add_executable(CalcService
     src/CalcServiceImpl.cpp
 )
 target_link_libraries(CalcService src-gen)
+
+
+# install the systemd service and its dependencies
+install(TARGETS CalcService
+        RUNTIME DESTINATION /usr/local/bin
+        PERMISSIONS OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE
+)
+
+install(FILES ${COMMONAPI_DIR}/common-api-runtime/build/libCommonAPI.so
+        DESTINATION /usr/lib
+)
+
+install(FILES systemd/Calc.service
+        DESTINATION /etc/systemd/system
+)

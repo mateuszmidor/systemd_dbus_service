@@ -1,0 +1,13 @@
+[Unit]
+Description=Dbus based calculator service
+After=dbus.service
+
+[Service]
+Type=dbus
+BusName=com.mateuszmidor.CalcService
+ExecStart=/usr/local/bin/CalcService
+#Environment=COMMONAPI_DBUS_CONFIG=/etc/commonapi-dbus/CalcService-stub.ini
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
