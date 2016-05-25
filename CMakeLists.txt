@@ -22,18 +22,18 @@ set(GENERATED_SOURCES
 # add source generator step
 add_custom_command(
     OUTPUT ${GENERATED_SOURCES}
-    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
     DEPENDS fidl/CalcService.fidl
-    COMMENT "Generating CommonAPI sources from FrancaIDL"
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
     COMMAND sh ${PROJECT_SOURCE_DIR}/generate_c++_from_franca.sh 
+    COMMENT "Generating CommonAPI sources from FrancaIDL"
 )
  
 
-# make a common library from the generated source; client and service will both use that 
-add_library(src-gen STATIC ${GENERATED_SOURCES})
+# make an interface library that knows include dirs and libraries; client and service will both need that
+add_library(src-gen-interface INTERFACE)
 
-target_include_directories(src-gen
-                            PUBLIC
+target_include_directories(src-gen-interface
+                            INTERFACE
                                 ${SRC-GEN_DIR}
                                 ${COMMONAPI_DIR}/dbus-1.8.20
                                 ${COMMONAPI_DIR}/common-api-runtime/include
@@ -46,25 +46,31 @@ link_directories(
     ${COMMONAPI_DIR}/dbus-1.8.20/dbus/.libs
 )
  
-target_link_libraries(src-gen
-                         PUBLIC
-                            CommonAPI CommonAPI-DBus dbus-1
+target_link_libraries(src-gen-interface
+                         INTERFACE
+                            dbus-1
+                            CommonAPI
+                            CommonAPI-DBus
 )
- 
- 
+
+
 # add Client target
 add_executable(CalcClient
     src/Client.cpp
+    ${GENERATED_SOURCES}
 )
-target_link_libraries(CalcClient src-gen)
- 
- 
+
+target_link_libraries(CalcClient src-gen-interface)
+
+
 # add Service target
 add_executable(CalcService
     src/Service.cpp
     src/CalcServiceImpl.cpp
+    ${GENERATED_SOURCES}
 )
-target_link_libraries(CalcService src-gen)
+
+target_link_libraries(CalcService src-gen-interface)
 
 
 # install the systemd service and its dependencies
