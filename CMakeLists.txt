@@ -1,8 +1,8 @@
 cmake_minimum_required (VERSION 3.2)
 project (systemd_dbus_service_demo)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -g -O0")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -g -O0 -std=c++11")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11")
 
 
 # setup directory paths for short
@@ -19,7 +19,7 @@ set(GENERATED_SOURCES
 )
 
 
-# add source generator step
+# add c++ source-from-francaIDL generating step
 add_custom_command(
     OUTPUT ${GENERATED_SOURCES}
     DEPENDS fidl/CalcService.fidl
@@ -29,11 +29,11 @@ add_custom_command(
 )
  
 
-# make an interface library that knows include dirs and libraries; client and service will both need that
-add_library(src-gen-interface INTERFACE)
+# make a library out of generated sources; client and service will both use that
+add_library(src-gen STATIC ${GENERATED_SOURCES})
 
-target_include_directories(src-gen-interface
-                            INTERFACE
+target_include_directories(src-gen
+                            PUBLIC
                                 ${SRC-GEN_DIR}
                                 ${COMMONAPI_DIR}/dbus-1.8.20
                                 ${COMMONAPI_DIR}/common-api-runtime/include
@@ -46,31 +46,34 @@ link_directories(
     ${COMMONAPI_DIR}/dbus-1.8.20/dbus/.libs
 )
  
-target_link_libraries(src-gen-interface
-                         INTERFACE
+target_link_libraries(src-gen
+                         PUBLIC
                             dbus-1
                             CommonAPI
                             CommonAPI-DBus
 )
 
+# tell the linker to include whole archive not just the actually used code
+# this is needed as commonapi uses ugly gcc trick __attribute__ ((constructor)) for autoinitialization
+# and that would normally not be included in the binary
+SET(src-gen-whole-archive -Wl,--whole-archive src-gen -Wl,--no-whole-archive)
+
 
 # add Client target
 add_executable(CalcClient
-    src/Client.cpp
-    ${GENERATED_SOURCES}
+    src/Client.cpp   
 )
 
-target_link_libraries(CalcClient src-gen-interface)
+target_link_libraries(CalcClient ${src-gen-whole-archive})
 
 
 # add Service target
 add_executable(CalcService
     src/Service.cpp
     src/CalcServiceImpl.cpp
-    ${GENERATED_SOURCES}
 )
 
-target_link_libraries(CalcService src-gen-interface)
+target_link_libraries(CalcService ${src-gen-whole-archive})
 
 
 # install the systemd service and its dependencies
