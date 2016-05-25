@@ -117,7 +117,8 @@ try unzip commonapi-generator.zip -d commonapi-generator
 try unzip commonapi_dbus_generator.zip -d commonapi_dbus_generator
 try chmod +x ./commonapi-generator/commonapi-generator-linux-x86
 try chmod +x ./commonapi_dbus_generator/commonapi-dbus-generator-linux-x86
-
+try chmod +x ./commonapi-generator/commonapi-generator-linux-x86_64
+try chmod +x ./commonapi_dbus_generator/commonapi-dbus-generator-linux-x86_64
 
 
 #####################################################################################
