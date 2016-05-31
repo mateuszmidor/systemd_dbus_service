@@ -111,8 +111,8 @@ check_expected libCommonAPI-DBus.so
 cd "$BASEDIR" || fail
 mkdir -p cgen
 cd cgen/ || fail
-try wget http://docs.projects.genivi.org/yamaica-update-site/CommonAPI/generator/3.1/3.1.3/commonapi-generator.zip
-try wget http://docs.projects.genivi.org/yamaica-update-site/CommonAPI/generator/3.1/3.1.3/commonapi_dbus_generator.zip
+try wget http://docs.projects.genivi.org/yamaica-update-site/CommonAPI/generator/3.1/3.1.5/commonapi-generator.zip
+try wget http://docs.projects.genivi.org/yamaica-update-site/CommonAPI/generator/3.1/3.1.5/commonapi_dbus_generator.zip
 try unzip commonapi-generator.zip -d commonapi-generator
 try unzip commonapi_dbus_generator.zip -d commonapi_dbus_generator
 try chmod +x ./commonapi-generator/commonapi-generator-linux-x86

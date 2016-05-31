@@ -11,7 +11,7 @@
 #include <map>
 #include <string>
 #include <CommonAPI/CommonAPI.hpp>
-#include "v1_0/commonapi/CalcServiceStubDefault.hpp"
+#include "v1/commonapi/CalcServiceStubDefault.hpp"
 
 using std::map;
 using std::string;

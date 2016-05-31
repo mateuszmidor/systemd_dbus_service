@@ -12,7 +12,7 @@
 #include <memory>
 #include <unistd.h>
 #include <CommonAPI/CommonAPI.hpp>
-#include "v1_0/commonapi/CalcServiceProxy.hpp"
+#include "v1/commonapi/CalcServiceProxy.hpp"
 #include "Console.hpp"
 
 using namespace std;
