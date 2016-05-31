@@ -88,6 +88,9 @@ install(FILES ${COMMONAPI_DIR}/common-api-runtime/build/libCommonAPI.so
 		${COMMONAPI_DIR}/common-api-dbus-runtime/build/libCommonAPI-DBus.so
 		${COMMONAPI_DIR}/common-api-dbus-runtime/build/libCommonAPI-DBus.so.3
 		${COMMONAPI_DIR}/common-api-dbus-runtime/build/libCommonAPI-DBus.so.3.1.5
+		${COMMONAPI_DIR}/dbus-1.8.20/dbus/.libs/libdbus-1.so
+		${COMMONAPI_DIR}/dbus-1.8.20/dbus/.libs/libdbus-1.so.3
+		${COMMONAPI_DIR}/dbus-1.8.20/dbus/.libs/libdbus-1.so.3.8.13
         DESTINATION /usr/lib
 )
 
