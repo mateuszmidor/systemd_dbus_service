@@ -83,6 +83,11 @@ install(TARGETS CalcService
 )
 
 install(FILES ${COMMONAPI_DIR}/common-api-runtime/build/libCommonAPI.so
+		${COMMONAPI_DIR}/common-api-runtime/build/libCommonAPI.so.3
+		${COMMONAPI_DIR}/common-api-runtime/build/libCommonAPI.so.3.1.5
+		${COMMONAPI_DIR}/common-api-dbus-runtime/build/libCommonAPI-DBus.so
+		${COMMONAPI_DIR}/common-api-dbus-runtime/build/libCommonAPI-DBus.so.3
+		${COMMONAPI_DIR}/common-api-dbus-runtime/build/libCommonAPI-DBus.so.3.1.5
         DESTINATION /usr/lib
 )
 
