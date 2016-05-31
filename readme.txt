@@ -15,7 +15,10 @@ Prerequisites?
 Steps to run the demo:
     0. Very first, run "install_linux_basetools.sh" to install CommonAPI installer tools.
     1. First run the installer script "install_common_api.sh" under CommonAPI/ 
-    2. Then run "cmake .." inside ./build/
-    3. Then run "make" inside ./build/
-    4. Then run CalcService and CalcClient in separate terminal windows
-    5. Issue "add 2 3" from CalcClient and see how it is handled by CalcService
+    2. Under docker/: build_docker.sh, run_docker.sh, generate_c++_from_franca.sh, exit
+    3. Then run "cmake .." inside ./build/
+    4. Then run "make" inside ./build/
+    5. Then run CalcService and CalcClient in separate terminal windows
+    6. Issue "add 2 3" from CalcClient and see how it is handled by CalcService
+	7. sudo make install, to install systemd service
+	8. systemctl start CalcService to run the service, run CalcClient and play around
