@@ -11,22 +11,21 @@
 #include <map>
 #include <string>
 #include <CommonAPI/CommonAPI.hpp>
-#include "v1/commonapi/CalcServiceStubDefault.hpp"
+#include "v1/com/mateuszmidor/CalcStubDefault.hpp"
 
 using std::map;
 using std::string;
 using std::shared_ptr;
 
-class CalServiceImpl: public v1_0::commonapi::CalcServiceStubDefault {
+class CalcImpl: public v1::com::mateuszmidor::CalcStubDefault {
 private:
     map<string, string> dictionary;
 
 public:
-    CalServiceImpl();
-    virtual ~CalServiceImpl();
+    CalcImpl();
+    virtual ~CalcImpl();
 
     virtual void add(const std::shared_ptr<CommonAPI::ClientId> _client, int32_t _a, int32_t _b, addReply_t _reply);
-
 };
 
 #endif /* PERSISTENCESERVICEIMPL_HPP_ */

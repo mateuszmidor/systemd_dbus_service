@@ -1,6 +1,6 @@
-package commonapi
+package com.mateuszmidor
   
-interface CalcService {
+interface Calc {
 
 version {major 1 minor 0}
 	method add {

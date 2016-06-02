@@ -11,7 +11,7 @@
 #include <thread>
 #include <memory>
 #include <CommonAPI/CommonAPI.hpp>
-#include "CalcServiceImpl.h"
+#include "CalcImpl.h"
 
 using namespace std;
 
@@ -19,9 +19,9 @@ int main() {
 
     // initialize CommonAPI runtime and register the Persistence service instance
     shared_ptr<CommonAPI::Runtime> runtime = CommonAPI::Runtime::get();
-    shared_ptr<CalServiceImpl> myService = make_shared<CalServiceImpl>();
-    runtime->registerService("local", "calculator", myService);
-    cout << "Successfully Registered PersistenceService!" << endl;
+    shared_ptr<CalcImpl> myService = make_shared<CalcImpl>();
+    runtime->registerService("local", "main", myService, "CalcServerDbusConnection"); // CalcServerDbusConnection is used in Calc-stub.ini
+    cout << "Successfully Registered Calc under CalcServerDbusConnection!" << endl;
 
     // keep the Persistence service alive
     while (true) {
