@@ -91,7 +91,7 @@ install(FILES ${COMMONAPI_DIR}/common-api-runtime/build/libCommonAPI.so
 		${COMMONAPI_DIR}/dbus-1.8.20/dbus/.libs/libdbus-1.so
 		${COMMONAPI_DIR}/dbus-1.8.20/dbus/.libs/libdbus-1.so.3
 		${COMMONAPI_DIR}/dbus-1.8.20/dbus/.libs/libdbus-1.so.3.8.13
-        DESTINATION /usr/local/lib
+        DESTINATION /lib
 )
 
 install(FILES systemd/Calc.service
@@ -99,9 +99,9 @@ install(FILES systemd/Calc.service
 )
 
 install(FILES "systemd/Calc-stub.ini" 
-        DESTINATION "/usr/local/etc/commonapi-dbus"
+        DESTINATION "/etc/commonapi-dbus"
 )
 
 install(FILES "systemd/com.mateuszmidor.Calc.conf" 
-        DESTINATION "/usr/local/etc/dbus-1/system.d"
+        DESTINATION "/etc/dbus-1/system.d"
 )
