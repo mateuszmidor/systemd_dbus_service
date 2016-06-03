@@ -17,9 +17,15 @@ using namespace std;
 
 int main() {
 
+    auto log = [](const char s[]) { cout << "### " << s << endl; };
     // initialize CommonAPI runtime and register the Persistence service instance
+    log("get runtime");
     shared_ptr<CommonAPI::Runtime> runtime = CommonAPI::Runtime::get();
+
+    log("create service");
     shared_ptr<CalcImpl> myService = make_shared<CalcImpl>();
+
+    log("register service");
     runtime->registerService("local", "main", myService, "CalcServerDbusConnection"); // CalcServerDbusConnection is used in Calc-stub.ini
     cout << "Successfully Registered Calc under CalcServerDbusConnection!" << endl;
 

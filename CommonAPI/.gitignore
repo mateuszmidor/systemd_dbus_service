@@ -2,4 +2,5 @@
 *
 # Except this file
 !.gitignore
-!install_common_api.sh
+!common-api-runtime
+!common-api-dbus-runtime
