@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ARTIFACTS=('libCommonAPI.so*' 'Calc-stub.ini' 'com.mateuszmidor.Calc.conf' 'Calc.service' 'CalcServer')
+ARTIFACTS=('libCommonAPI.so*' 'Calc-stub.ini' 'com.mateuszmidor.calc.calcInterface.conf' 'Calc.service' 'CalcServer')
 PATHS=('/usr' '/etc' '/lib' '/bin')
 
 for path in ${PATHS[@]}; do
