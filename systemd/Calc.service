@@ -5,8 +5,8 @@ After=dbus.service
 
 [Service]
 Type=dbus
-BusName=com.mateuszmidor.Calc
-ExecStart=/usr/local/bin/CalcServer
+BusName=com.mateuszmidor.CalcService
+ExecStart=/usr/bin/CalcServer
 Environment=COMMONAPI_DBUS_CONFIG=/etc/commonapi-dbus/Calc-stub.ini
 #Restart=on-failure
 

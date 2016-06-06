@@ -11,13 +11,13 @@
 #include <map>
 #include <string>
 #include <CommonAPI/CommonAPI.hpp>
-#include "v1/com/mateuszmidor/CalcStubDefault.hpp"
+#include "v1/com/mateuszmidor/calc/calcInterfaceStubDefault.hpp"
 
 using std::map;
 using std::string;
 using std::shared_ptr;
 
-class CalcImpl: public v1::com::mateuszmidor::CalcStubDefault {
+class CalcImpl: public v1::com::mateuszmidor::calc::calcInterfaceStubDefault {
 private:
     map<string, string> dictionary;
 

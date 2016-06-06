@@ -12,11 +12,11 @@
 #include <memory>
 #include <unistd.h>
 #include <CommonAPI/CommonAPI.hpp>
-#include "v1/com/mateuszmidor/CalcProxy.hpp"
+#include "v1/com/mateuszmidor/calc/calcInterfaceProxy.hpp"
 #include "Console.hpp"
 
 using namespace std;
-using namespace v1::com::mateuszmidor;
+using namespace v1::com::mateuszmidor::calc;
 
 //Listener listener, ErrorListener errorListener
 
@@ -24,7 +24,7 @@ int main() {
 
     // initialize CommonAPI runtime and get service proxy instance
     shared_ptr<CommonAPI::Runtime> runtime = CommonAPI::Runtime::get();
-    shared_ptr<CalcProxy<>> myProxy = runtime->buildProxy<CalcProxy>("local", "main");
+    shared_ptr<calcInterfaceProxy<>> myProxy = runtime->buildProxy<calcInterfaceProxy>("local", "main");
 
     // loop until the service is available
     cout << "Checking availability!" << endl;
