@@ -21,8 +21,6 @@ public:
 
     // Get user input and split it into [command, params]
     static std::tuple<std::string, std::vector<std::string>> getInput() {
-        // print out prompt
-        std::cout << "> ";
 
         // get entire line from console
         std::string line;

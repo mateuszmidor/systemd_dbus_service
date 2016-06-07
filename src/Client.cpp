@@ -21,10 +21,12 @@ using namespace v1::com::mateuszmidor::calc;
 //Listener listener, ErrorListener errorListener
 
 int main() {
-
     // initialize CommonAPI runtime and get service proxy instance
     shared_ptr<CommonAPI::Runtime> runtime = CommonAPI::Runtime::get();
-    shared_ptr<calcInterfaceProxy<>> myProxy = runtime->buildProxy<calcInterfaceProxy>("local", "main");
+
+    // CalcServiceDbusConnection is used in Calc-stub.ini
+    // same must be used on server side
+    shared_ptr<calcInterfaceProxy<>> myProxy = runtime->buildProxy<calcInterfaceProxy>("local", "main", "CalcServiceDbusConnection");
 
     // loop until the service is available
     cout << "Checking availability!" << endl;
@@ -33,9 +35,11 @@ int main() {
     cout << "Available..." << endl;
 
     // subscribe to CalculationDone service event (broadcast in fild)
-    auto event_listener = [](const string &s) { cout << s << endl; };
+    auto event_calculation_listener = [](const string &s) { cout << s << endl; };
+    auto event_terminate_listener = []() { cout << "CalcServer terminated!\n"; exit(0); };
     auto error_listener = [](CommonAPI::CallStatus s) { cout << "Broadcast Error" << endl; };
-    myProxy->getCalculationDoneEvent().subscribe(event_listener, error_listener);
+    myProxy->getCalculationDoneEvent().subscribe(event_calculation_listener, error_listener);
+    myProxy->getTerminateEvent().subscribe(event_terminate_listener, error_listener);
 
     // some handy variables
     CommonAPI::CallStatus callStatus;
@@ -44,7 +48,7 @@ int main() {
     vector<string> params;
 
 
-    // interact with the user. forever
+    // interact with the user.
     while (true) {
         // get user input from console
         tie(command, params) = Console::getInput();

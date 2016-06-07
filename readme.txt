@@ -25,4 +25,4 @@ For ambitious ones:
 	7. sudo make install, to install systemd service
 	8. "xhost +", to allow X server connections from other than current user
 	9. systemctl start CalcService to run the service,
-	10. export COMMONAPI_DBUS_CONFIG=/etc/commonapi-dbus/Calc-stub.ini, the run CalcClient and play around
+	10. export COMMONAPI_DBUS_CONFIG=/etc/commonapi-dbus/Calc-stub.ini, then run CalcClient and play around
