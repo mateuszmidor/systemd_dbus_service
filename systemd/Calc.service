@@ -1,14 +1,16 @@
 [Unit]
 Description=Dbus based calculator service
-Requires=dbus.service
+Requires=dbus.service 
+#display-manager.service vboxadd-x11.service graphical.target
 After=dbus.service
+# display-manager.service vboxadd-x11.service graphical.target
 
 [Service]
 Type=dbus
 BusName=com.mateuszmidor.CalcService
 ExecStart=/usr/bin/CalcServer
-Environment=COMMONAPI_DBUS_CONFIG=/etc/commonapi-dbus/Calc-stub.ini
-#Restart=on-failure
+Environment=COMMONAPI_DBUS_CONFIG=/etc/commonapi-dbus/Calc-stub.ini DISPLAY=:0
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target

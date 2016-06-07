@@ -102,6 +102,6 @@ install(FILES "systemd/Calc-stub.ini"
         DESTINATION "/etc/commonapi-dbus"
 )
 
-install(FILES "systemd/com.mateuszmidor.Calc.conf" 
+install(FILES "systemd/com.mateuszmidor.calc.calcInterface.conf" 
         DESTINATION "/etc/dbus-1/system.d"
 )
