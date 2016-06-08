@@ -24,24 +24,27 @@ int main() {
     // initialize CommonAPI runtime and get service proxy instance
     shared_ptr<CommonAPI::Runtime> runtime = CommonAPI::Runtime::get();
 
-    // CalcServiceDbusConnection is used in Calc-stub.ini
-    // same must be used on server side
-    shared_ptr<calcInterfaceProxy<>> myProxy = runtime->buildProxy<calcInterfaceProxy>("local", "main", "CalcServiceDbusConnection");
+	// build proxy to connect to the calc service instance
+	// "local" is always used
+	// "main" is chosen arbitrarily but must be same in Client, Server and commonapi config file (Calc-stub.ini)
+	// "CalcServiceDbusConnection" is chosen arbitrarily but must be same in Client, Server and commonapi config file (Calc-stub.ini)
+    shared_ptr<calcInterfaceProxy<>> calcProxy = runtime->buildProxy<calcInterfaceProxy>("local", "main", "CalcServiceDbusConnection");
 
     // loop until the service is available
-    cout << "Checking availability!" << endl;
-    while (!myProxy->isAvailable())
+    cout << "Checking calc service availability..." << endl;
+    while (!calcProxy->isAvailable())
         usleep(10);
-    cout << "Available..." << endl;
+    cout << "Available! Try command: add 2 3" << endl;
 
-    // subscribe to CalculationDone service event (broadcast in fild)
-    auto event_calculation_listener = [](const string &s) { cout << s << endl; };
-    auto event_terminate_listener = []() { cout << "CalcServer terminated!\n"; exit(0); };
-    auto error_listener = [](CommonAPI::CallStatus s) { cout << "Broadcast Error" << endl; };
-    myProxy->getCalculationDoneEvent().subscribe(event_calculation_listener, error_listener);
-    myProxy->getTerminateEvent().subscribe(event_terminate_listener, error_listener);
 
-    // some handy variables
+    // subscribe to events ("broadcasts" in FrancaIDL terminology)
+    auto event_calculationdone_listener = [](const string &s) { cout << "(" << s << ")" << "\n> " << flush; };
+    auto event_serviceterminated_listener = []() { cout << "(Calc Service terminated!)\n"; exit(0); };
+    auto event_error_listener = [](CommonAPI::CallStatus s) { cout << "(Broadcast Error)" << endl; };
+    calcProxy->getCalculationDoneEvent().subscribe(event_calculationdone_listener, event_error_listener);
+    calcProxy->getTerminateEvent().subscribe(event_serviceterminated_listener, event_error_listener);
+
+    // some handy variables for command parsing and calculating
     CommonAPI::CallStatus callStatus;
     int64_t calculator_result;
     string command;
@@ -56,7 +59,7 @@ int main() {
         // parse the input
         if ((command == "add") && (params.size() == 2)) {
 
-            myProxy->add(stoi(params[0]), stoi(params[1]), callStatus, calculator_result);
+            calcProxy->add(stoi(params[0]), stoi(params[1]), callStatus, calculator_result);
             cout << " result: " << calculator_result << endl;
         }
         else {
